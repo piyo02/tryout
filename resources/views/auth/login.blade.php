@@ -9,7 +9,7 @@
 	<link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon"/>
 
     <!-- Fonts and icons -->
-	<script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
+	<script src="{{ asset('assets/v2/js/plugin/webfont/webfont.min.js') }}"></script>
 	<script>
 		WebFont.load({
 			google: {"families":["Lato:300,400,700,900"]},
@@ -20,8 +20,8 @@
 		});
 	</script>
 
-	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/atlantis.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/v2/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/v2/css/atlantis.css') }}">
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css">
 </head>
 
@@ -35,12 +35,12 @@
             }
         </style>
 
-        <div class="container container-login animated fadeIn">
+        <div class="container container-login animated fadeIn" style="padding-top: 10px !important">
             {{-- <img src="{{ asset('assets/img/aquatic.png') }}" class="img-fluid mb-5"> --}}
             <div class="col-12 text-center">
-                <img src="{{ asset('assets/img/logo-text.png') }}" class="img-fluid" width="150px">
+                <img src="{{ asset('assets/img/logo-text.png') }}" class="img-fluid" width="200px">
             </div>
-            <h3 class="text-center">Login</h3>
+            <h3 class="text-center">LOGIN</h3>
             <div class="login-form">
                 <form method="post" action="/login" class="form-horizontal">
                     @csrf
@@ -65,44 +65,44 @@
         </div>
     </div>
     <!--   Core JS Files   -->
- <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
+ <script src="{{ asset('assets/v2/js/plugin/webfont/webfont.min.js') }}"></script>
 
-<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/core/jquery.3.2.1.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/core/bootstrap.min.js') }}"></script>
 
 <!-- jQuery UI -->
-<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
 <!-- jQuery Scrollbar -->
-<script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
 
 <!-- Chart JS -->
-<script src="{{ asset('assets/js/plugin/chart.js/chart.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/chart.js/chart.min.js') }}"></script>
 
 <!-- jQuery Sparkline -->
-<script src="{{ asset('assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
 
 <!-- Chart Circle -->
-<script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/chart-circle/circles.min.js') }}"></script>
 
 <!-- Datatables -->
-<script src="{{ asset('assets/js/plugin/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/datatables/datatables.min.js') }}"></script>
 
 <!-- Bootstrap Notify -->
-<script src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
 <!-- jQuery Vector Maps -->
-<script src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
 <!-- Sweet Alert -->
-<script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
 <!-- Atlantis JS -->
-<script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
+<script src="{{ asset('assets/v2/js/atlantis.min.js') }}"></script>
 
 </body>
 

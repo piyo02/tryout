@@ -44,7 +44,7 @@
                                 <td>{{$result->user->name}}</td>
                                 <td>{{$result->final_value}}</td>
                                 <td>
-                                    <a href="/history/tryout/worksheet/{{$result->id}}?tryout_id={{$result->tryout_id}}" class="btn btn-sm btn-default">
+                                    <a id="btn_student" href="/history/tryout/worksheet/{{$result->id}}?tryout_id={{$result->tryout_id}}" class="btn btn-sm btn-default">
                                         <i class="icon-eye"></i>
                                         Detail
                                     </a>

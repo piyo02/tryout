@@ -69,7 +69,7 @@
                                     <label for="image">Foto Siswa</label>
                                     <input type="file" name="image" id="image" class="form-control-file">
                                 </div>
-                                @if ($edit)
+                                {{-- @if ($edit)
                                 <div class="form-group form-group-default">
                                     <label>Password Lama</label>
                                     <input id="old_pass" name="old_pass" type="text" class="form-control" placeholder="Password Lama">
@@ -82,7 +82,7 @@
                                     <label>Konfirmasi Password Baru</label>
                                     <input id="confirm_passw" name="confirm_passw" type="text" class="form-control" placeholder="Konfirmasi Password Baru">
                                 </div>  
-                                @endif
+                                @endif --}}
                             </div>
                             @if (isset($student))
                                 <div class="col-md-6 pr-0">

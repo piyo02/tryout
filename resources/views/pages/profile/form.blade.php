@@ -48,9 +48,25 @@
                                 </div>
                             </div>
                             @if (isset($user))
+                            <div class="col-md-6">
                                 <div class="col-md-6 pr-0">
                                     <img src="{{ asset('storage') . '/' . $user->image }}" class="img-fluid">
                                 </div>
+                            </div>
+                            <div class="col-md-6 pr-0">
+                                <div class="form-group form-group-default mt-5">
+                                    <label>Password Lama</label>
+                                    <input id="old_pass" name="old_pass" type="text" class="form-control" placeholder="Password Lama">
+                                </div>    
+                                <div class="form-group form-group-default">
+                                    <label>Password Baru</label>
+                                    <input id="password" name="password" type="text" class="form-control" placeholder="Password Baru">
+                                </div>    
+                                <div class="form-group form-group-default">
+                                    <label>Konfirmasi Password Baru</label>
+                                    <input id="confirm_pass" name="confirm_pass" type="text" class="form-control" placeholder="Konfirmasi Password Baru">
+                                </div>    
+                            </div>
                             @endif
                         </div>
                         <div class="row">

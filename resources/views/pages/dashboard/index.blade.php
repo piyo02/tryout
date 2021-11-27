@@ -11,6 +11,7 @@
     </div>
 </div>
 <div class="page-inner mt--5">
+    @admin
     <div class="row mt--2">
         <div class="col-sm-6 col-md-3">
             <div class="card card-stats card-round">
@@ -89,6 +90,7 @@
             </div>
         </div>
     </div>
+    @endadmin
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -102,14 +104,14 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Token</th>
-                                <th scope="col">Tanggal</th>
+                                <th scope="col">Tanggal Ujian</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tryouts as $tryout)
                                 <tr>
-                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{($tryouts->currentPage() - 1) * $tryouts->perPage() + $loop->iteration}}</td>
                                     <td>{{ $tryout->collection->name }}</td>
                                     <td>{{ preg_replace("/(?!^).(?!$)/", "*", $tryout->token) }}</td>
                                     <td>{{$tryout->date}}</td>
@@ -123,6 +125,11 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+                <div class="card-footer">
+                    <ul class="pagination pg-primary">
+                        {{ $tryouts->links() }}
+                    </ul>
                 </div>
             </div>
         </div>

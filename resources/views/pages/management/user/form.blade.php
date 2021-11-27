@@ -52,7 +52,7 @@
                                     <input type="file" name="image" id="image" class="form-control-file">
                                 </div>
                             </div>
-                            @if ($edit)
+                            {{-- @if ($edit)
                             <div class="col-md-6 pr-0">
                                 <div class="form-group form-group-default mt-5">
                                     <label>Password Lama</label>
@@ -67,7 +67,7 @@
                                     <input id="confirm_passw" name="confirm_passw" type="text" class="form-control" placeholder="Konfirmasi Password Baru">
                                 </div>    
                             </div>
-                            @endif
+                            @endif --}}
                             @if (isset($user))
                                 <div class="col-md-6 pr-0">
                                     <img src="{{ asset('storage') . '/' . $user->image }}" class="img-fluid">

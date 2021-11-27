@@ -43,14 +43,12 @@
                                 <label>Nama User</label>
                                 <input disabled id="name" name="name" type="text" class="form-control" placeholder="Nama User" value="{{ isset($user) ? $user->name : '' }}" required>
                             </div>
-                        </div>
-                        <div class="col-md-6 pr-0">
                             <div class="form-group form-group-default">
                                 <label>Email User</label>
                                 <input disabled id="email" name="email" type="email" class="form-control" placeholder="Email User" value="{{ isset($user) ? $user->email: '' }}" required>
                             </div>
                         </div>
-                        <div class="col-md-6 pr-0">
+                        <div class="col-md-3 pr-0">
                             <img src="{{ asset('storage') . '/' . $user->image }}" class="img-fluid">
                         </div>
                     </div>

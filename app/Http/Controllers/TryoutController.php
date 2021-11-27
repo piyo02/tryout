@@ -251,24 +251,23 @@ class TryoutController extends Controller
 
     public function worksheet(Worksheet $worksheet, Request $request)
     {
-        $answers = StudentAnswer::join('questions', 'questions.id', '=', 'student_answers.question_id')
-                                ->select('student_answers.*', 'questions.variation_id')
-                                ->where('worksheet_id', $worksheet->id)
-                                ->orderBy('questions.variation_id')
-                                ->get();
-        foreach ($answers as $answer) {
-            dump($answer->question->option_id);
-            foreach ($answer->question->options as $option) {
-                dump($option->id);
-                dump($option->value);
-            }
-            die;
+        $role_id = auth()->user()->role_id;
+        if( $role_id == 4 ){
+            $back = '/history/tryout';
+        } else {
+            $back = '/history/tryout/' . $worksheet->tryout_id;
         }
-
         $results = ResultWorksheet::where('worksheet_id', $worksheet->id)->get();
+        $worksheets = Worksheet::where([
+            ['tryout_id', '=', $worksheet->tryout_id],
+            ['status', '=', 1],
+        ])->orderBy('final_value', 'desc')->paginate(10);
         return view('pages.tryout.result', [
+            'worksheets' => $worksheets,
             'worksheet' => $worksheet,
             'results' => $results,
+            'back' => $back,
+            'role_id' => $role_id,
         ]);
     }
 
@@ -390,10 +389,10 @@ class TryoutController extends Controller
                             ->join('worksheets', 'worksheets.tryout_id', '=', 'tryouts.id')
                             ->where('user_id', '=', $user_id)
                             ->orderBy('worksheets.id', 'desc')
-                            ->paginate(3);
+                            ->paginate(6);
             $table_name = 'Daftar Try Out Yang Telah Diikuti';
         } else  {
-            $tryouts = Tryout::latest()->paginate(3);
+            $tryouts = Tryout::latest()->paginate(6);
             $table_name = 'Daftar Try Out';
         }
         

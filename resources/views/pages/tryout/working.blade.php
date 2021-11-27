@@ -16,7 +16,7 @@
 			},
 			custom: {
 				"families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-				urls: ["{{ asset('assets/v2/css/fonts.min.css') }}"]
+				urls: ["{{ asset('assets/css/fonts.min.css') }}"]
 			},
 			active: function() {
 				sessionStorage.fonts = true;
@@ -29,15 +29,27 @@
 
 </head>
 
-<body data-background-color="bg3">
-	<div class="wrapper overlay-sidebar">
+<body data-background-color="bg2">
+	<div class="wrapper sidebar_minimize">
 		<div class="main-header">
-			<div class="logo-header" data-background-color="white">
-
+			<div class="logo-header position-fixed" data-background-color="white">
 				<a href="#" class="logo">
-					<img src="{{ asset('assets/img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="90%">
+					<img src="{{ asset('assets/img/logo.png') }}" alt="navbar brand" class="navbar-brand" height="70%">
 				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="icon-menu"></i>
+					</span>
+				</button>
+				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+				<div class="nav-toggle">
+					<button class="btn btn-toggle toggle-sidebar">
+						<i class="icon-menu"></i>
+					</button>
+				</div>
 			</div>
+
+			@include('partials.sidebar')
 
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
 
@@ -115,6 +127,9 @@
 
 		// variation 3
 		var column = document.getElementById('column');
+		if( variation_id.value == 3 ){
+			document.body.style.zoom = '70%';			
+		}
 
 		function show_parent(index) {
 			if (parent_quest.length == index && variation_id.value != 1) {
@@ -183,6 +198,35 @@
 
 
 		function answer(opt_id, quest_id, skor, next = false, last = false) {
+			var btn_option = document.getElementById(opt_id);
+			if( variation_id.value == 1 ){
+				if( btn_option ){
+					var prev_btn_options = document.getElementsByClassName('quest_'+quest_id);
+					if( prev_btn_options ){
+						for (let index = 0; index < prev_btn_options.length; index++) {
+							const prev_btn_option = prev_btn_options[index];
+							prev_btn_option.classList.add('btn-border')
+						}
+					}
+
+					btn_option.classList.remove('btn-border')
+				}
+			}
+			if(variation_id.value == 3){
+				if( btn_option ){
+					var prev_btn_options = document.getElementsByClassName('quest_'+quest_id);
+					if( prev_btn_options ){
+						for (let index = 0; index < prev_btn_options.length; index++) {
+							const prev_btn_option = prev_btn_options[index];
+							prev_btn_option.classList.remove('btn-primary')
+							prev_btn_option.classList.remove('text-white')
+						}
+					}
+					btn_option.classList.add('btn-primary')
+					btn_option.classList.add('text-white')
+				}
+			}
+
 			var data = [];
 			data['worksheet_id'] = worksheet_id.value;
 			data['question_id'] = quest_id;
@@ -251,6 +295,9 @@
 			var stop = new Date(end_date.value).getTime();
 
 			var x = setInterval(() => {
+				if( isNaN(parseInt(tryout_time.value)) ){
+					fn_form_submit();
+				}
 				var end = new Date(stop + (parseInt(tryout_time.value) * 60000 * index_timer))
 				var now = new Date().getTime();
 
@@ -280,8 +327,8 @@
 		}
 
 		function fn_form_submit() {
-			// form_finish.submit();
-			console.log('fn_form_submit');
+			form_finish.submit();
+			// console.log('fn_form_submit');
 		}
 		timer();
 		show_parent(parent_index);

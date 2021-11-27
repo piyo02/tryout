@@ -6,14 +6,15 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
                 <h2 class="text-white pb-2 fw-bold">Try Out</h2>
-                <a class="btn btn-xs btn-danger" href="/history/tryout/{{$worksheet->tryout_id}}">Kembali</a>
+                <a class="btn btn-xs btn-danger" href="{{$back}}">Kembali</a>
             </div>
         </div>
     </div>
 </div>
 <div class="page-inner mt--5">
     <div class="row mt--1">
-        <div class="col-sm-4">
+        @if ($role_id == 4)
+        <div class="col-sm-5">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
@@ -21,11 +22,34 @@
                     </h4>
                 </div>
                 <div class="card-body">
-
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Peringkat</th>
+                                <th scope="col">Nama Siswa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($worksheets as $worksheet)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$worksheet->user->name}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    <ul class="pagination pg-primary">
+                        {{ $worksheets->links() }}
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-7">
+        @else
+        <div class="col-sm-12">      
+        @endif
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">

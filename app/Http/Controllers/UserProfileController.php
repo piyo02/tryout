@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserProfileController extends Controller
 {
@@ -47,7 +48,14 @@ class UserProfileController extends Controller
             if( $image ){
                 $validatedData['image'] = $image->store('images/users');
             }
-            
+            if( $request->old_pass ){
+                $check = Hash::check($request->old_pass, $profile->password);
+                if( $check && $request->password && $request->password == $request->confirm_pass ){
+                    $validatedData['password'] = \bcrypt($request->password);
+                }
+                $request->session()->flush();
+            }
+
             User::where('id', $profile->id)->update($validatedData);
             $status = 'success';
             $message = 'Berhasil Mengubah Profil Anda';

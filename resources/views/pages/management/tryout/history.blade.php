@@ -5,7 +5,7 @@
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">Try Out</h2>
+                <h2 class="text-white pb-2 fw-bold">Riwayat Try Out</h2>
             </div>
         </div>
     </div>
@@ -26,14 +26,14 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Token</th>
-                                <th scope="col">Tanggal</th>
+                                <th scope="col">Tanggal Tes</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tryouts as $tryout)
                                 <tr>
-                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{($tryouts->currentPage() - 1) * $tryouts->perPage() + $loop->iteration}}</td>
                                     <td>{{ $tryout->collection->name }}</td>
                                     <td>{{ preg_replace("/(?!^).(?!$)/", "*", $tryout->token) }}</td>
                                     <td>{{$tryout->date}}</td>

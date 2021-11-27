@@ -24,11 +24,11 @@ class DashboardController extends Controller
                             ->join('worksheets', 'worksheets.tryout_id', '=', 'tryouts.id')
                             ->where('user_id', '=', $user_id)
                             ->orderBy('worksheets.id')
-                            ->paginate(3);
+                            ->paginate(6);
             $table_name = 'Daftar Try Out Yang Telah Diikuti';
         
         } else {
-            $tryouts = Tryout::latest()->paginate(3);
+            $tryouts = Tryout::latest()->paginate(6);
             $table_name = 'Daftar Try Out';
         }
 

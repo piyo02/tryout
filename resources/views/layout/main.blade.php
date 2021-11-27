@@ -88,6 +88,11 @@
 			format: "YYYY-MM-DD",
 			useCurrent: false
 		})
+
+		var btn_student = document.getElementById('btn_student');
+		if( btn_student ){
+			btn_student.click();
+		}
 	</script>
 </body>
 
