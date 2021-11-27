@@ -22,7 +22,7 @@
                         @csrf
                         <input type="hidden" id="start_date" name="start_date" value="{{ session()->get('start_date') }}">
                         <input type="hidden" id="end_date" name="end_date" value="{{ session()->get('end_date') }}">
-                        <input type="hidden" id="time" name="time" value="{{ session()->get('time') }}">
+                        <input type="hidden" id="tryout_time" name="tryout_time" value="{{ session()->get('time') }}">
                         <input type="hidden" id="tryout_id" name="tryout_id" value="{{ $tryout->id }}">
                         <input type="hidden" id="variation_id" name="variation_id" value="{{ $tryout->collection->variation_id }}">
                         <input type="hidden" id="worksheet_id" name="worksheet_id" value="{{ session()->get('worksheet_id') }}">
@@ -34,18 +34,18 @@
     </div>
     <div class="row">
         <div class="col-sm-8">
-            @foreach ($questions as $question)
-            <div class="card d-none" id="{{ $question->id }}" value="{{ $question->id }}">
+            @foreach ($answers as $answer)
+            <div class="card d-none" id="{{ $answer->question_id }}" value="{{ $answer->question_id }}">
                 <div class="card-header">
-                    <h4><b>Soal {{$loop->iteration}}/{{count($questions)}}</b></h4>
+                    <h4><b>Soal {{$loop->iteration}}/{{count($answers)}}</b></h4>
                 </div>
                 <div class="card-body">
                     <div id="question" class="mb-2">
-                        {!! file_get_contents(storage_path('app/'.$question->value)) !!}
+                        {!! file_get_contents(storage_path('app/'.$answer->question->value)) !!}
                     </div>
                     <div class="options">
-                        @foreach ($question->options as $option)
-                        <div class="mb-3"><button onclick="answer( {{$option->id}}, {{$question->id}}, {{$option->skor}} )" class="mr-2 btn btn-sm btn-default btn-round btn-border">{{ $options[$loop->iteration] }}</button><span>{{ $option->value }}</span></div>
+                        @foreach ($answer->question->options as $option)
+                        <div class="mb-3"><button onclick="answer( {{$option->id}}, {{$answer->question_id}}, {{$option->skor}} )" class="mr-2 btn btn-sm btn-primary btn-round {{ ($answer->option_id != $option->id) ? 'btn-border' : ''  }}">{{ $options[$loop->iteration] }}</button><span>{{ $option->value }}</span></div>
                         @endforeach
                     </div>
                 </div>
@@ -57,8 +57,8 @@
                 <div class="card-body p-2">
                     <div class="col-12">
                         <div class="row justify-content-around">
-                            @foreach ($questions as $question)
-                            <button id="btn_number_{{ $question->id }}" onclick="change_question({{ $question->id }})" value="{{ $question->id }}" class="btn_number text-center btn-sm px-4 btn btn-default btn-border">{{$loop->iteration}}</button>
+                            @foreach ($answers as $answer)
+                            <button id="btn_number_{{ $answer->question_id }}" onclick="change_question({{ $answer->question_id }})" value="{{ $answer->question_id }}" class="btn_number text-center btn-sm px-4 btn btn-default btn-border">{{$loop->iteration}}</button>
                             @endforeach
                         </div>
                     </div>

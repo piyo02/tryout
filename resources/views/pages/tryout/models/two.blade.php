@@ -24,7 +24,7 @@
                                 @csrf
                                 <input type="hidden" id="start_date" name="start_date" value="{{ session()->get('start_date') }}">
                                 <input type="hidden" id="end_date" name="end_date" value="{{ session()->get('end_date') }}">
-                                <input type="hidden" id="time" name="time" value="{{ session()->get('time') }}">
+                                <input type="hidden" id="tryout_time" name="tryout_time" value="{{ session()->get('time') }}">
                                 <input type="hidden" id="tryout_id" name="tryout_id" value="{{ $tryout->id }}">
                                 <input type="hidden" id="variation_id" name="variation_id" value="{{ $tryout->collection->variation_id }}">
                                 <input type="hidden" id="worksheet_id" name="worksheet_id" value="{{ session()->get('worksheet_id') }}">

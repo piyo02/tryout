@@ -48,6 +48,11 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="card-footer">
+                    <ul class="pagination pg-primary">
+                        {{ $tryouts->links() }}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

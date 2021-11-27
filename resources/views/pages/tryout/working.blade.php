@@ -101,7 +101,7 @@
 		var worksheet_id = document.getElementById('worksheet_id');
 		var variation_id = document.getElementById('variation_id');
 		var tryout_id = document.getElementById('tryout_id');
-		var time = document.getElementById('time');
+		var tryout_time = document.getElementById('tryout_time');
 		var end_date = document.getElementById('end_date');
 
 		let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -117,7 +117,7 @@
 		var column = document.getElementById('column');
 
 		function show_parent(index) {
-			if (parent_quest.length == index) {
+			if (parent_quest.length == index && variation_id.value != 1) {
 				fn_form_submit();
 			}
 			if (parent_quest[index]) {
@@ -164,13 +164,15 @@
 			div_quest.classList.remove('d-none');
 			var curr_div_quest = document.getElementsByClassName('quest_display');
 			if (curr_div_quest[0]) {
-				var curr_btn_quest = document.getElementById('btn_number_' + curr_div_quest[0].id);
-				if (curr_btn_quest) {
-					curr_btn_quest.classList.add('btn-border');
+				if( curr_div_quest[0].id != quest_id ) {
+					var curr_btn_quest = document.getElementById('btn_number_' + curr_div_quest[0].id);
+					if (curr_btn_quest) {
+						curr_btn_quest.classList.add('btn-border');
+					}
+	
+					curr_div_quest[0].classList.add('d-none');
+					curr_div_quest[0].classList.remove('quest_display');
 				}
-
-				curr_div_quest[0].classList.add('d-none');
-				curr_div_quest[0].classList.remove('quest_display');
 			}
 
 			div_quest.classList.add('quest_display');
@@ -206,33 +208,33 @@
 				.then(response => response.json())
 				.then(function(data) {
 					console.log(data)
-					$.notify({
-						message: 'Jawaban anda berhasil Tersimpan',
-						icon: 'fa fa-bell',
-						title: 'Notifikasi',
-					}, {
-						type: 'info',
-						placement: {
-							from: 'bottom',
-							align: 'right'
-						},
-						time: 500,
-					});
+					// $.notify({
+					// 	message: 'Jawaban anda berhasil Tersimpan',
+					// 	icon: 'fa fa-bell',
+					// 	title: 'Notifikasi',
+					// }, {
+					// 	type: 'info',
+					// 	placement: {
+					// 		from: 'bottom',
+					// 		align: 'right'
+					// 	},
+					// 	time: 500,
+					// });
 				})
 				.catch(function(error) {
 					console.log(error);
-					$.notify({
-						message: 'Jawaban anda gagal Tersimpan',
-						icon: 'fa fa-bell',
-						title: 'Notifikasi',
-					}, {
-						type: 'danger',
-						placement: {
-							from: 'bottom',
-							align: 'left'
-						},
-						time: 500,
-					});
+					// $.notify({
+					// 	message: 'Jawaban anda gagal Tersimpan',
+					// 	icon: 'fa fa-bell',
+					// 	title: 'Notifikasi',
+					// }, {
+					// 	type: 'danger',
+					// 	placement: {
+					// 		from: 'bottom',
+					// 		align: 'left'
+					// 	},
+					// 	time: 500,
+					// });
 				});
 			if (next) {
 				if (next == quest_id) {
@@ -249,7 +251,7 @@
 			var stop = new Date(end_date.value).getTime();
 
 			var x = setInterval(() => {
-				var end = new Date(stop + 5 * 60000 * index_timer)
+				var end = new Date(stop + (parseInt(tryout_time.value) * 60000 * index_timer))
 				var now = new Date().getTime();
 
 				var distance = end - now;
@@ -278,8 +280,8 @@
 		}
 
 		function fn_form_submit() {
-			form_finish.submit();
-			// console.log('fn_form_submit');
+			// form_finish.submit();
+			console.log('fn_form_submit');
 		}
 		timer();
 		show_parent(parent_index);

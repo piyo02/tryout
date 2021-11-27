@@ -39,7 +39,7 @@ class TryoutController extends Controller
         $worksheets = Worksheet::where([
             ['tryout_id', '=', $tryout->id],
             ['status', '=', 1],
-        ])->orderBy('final_value')->paginate(10);
+        ])->orderBy('final_value', 'desc')->paginate(10);
         return view('pages.management.tryout.detail', [
             'result' => $result,
             'tryout' => $tryout,
@@ -90,13 +90,6 @@ class TryoutController extends Controller
             ])->first();
 
             if ($tryout) {
-                // ubah status tryout
-                if( $tryout->status == 0 || $tryout->status == 2){
-                    Tryout::where('id', $tryout->id)->update([
-                        'status' => 1
-                    ]);
-                }
-
                 $user_id = auth()->user()->id;
 
                 $worksheet = Worksheet::where([
@@ -111,9 +104,16 @@ class TryoutController extends Controller
                     $request->session()->put('worksheet_id', $worksheet->id);
 
                     if ($worksheet->status) {
-                        return \redirect('tryout/result?tryout_id=' . $worksheet->tryout_id);
+                        return \redirect('history/tryout/result?tryout_id=' . $worksheet->tryout_id);
                     }
                 } else {
+
+                    // ubah status tryout
+                    if( $tryout->status == 0 || $tryout->status == 2){
+                        Tryout::where('id', $tryout->id)->update([
+                            'status' => 1
+                        ]);
+                    }
 
                     $start_date = date('Y-m-d H:i:s');
 
@@ -172,11 +172,23 @@ class TryoutController extends Controller
 
     public function working(Request $request)
     {
+        $user_id = auth()->user()->id;
+
         $tryout = Tryout::where('id', $request->tryout_id)->first();
         $collection = Collection::where('id', $request->col_id)->first();
+        $worksheet = Worksheet::select('id')->where([
+            ['user_id', '=', $user_id],
+            ['tryout_id', '=', $tryout->id],
+        ])->first();
 
+        $answers = [];
         $variation_id = $collection->variation_id;
         if ($variation_id == 1) {
+            $answers = StudentAnswer::join('questions', 'questions.id', '=', 'student_answers.question_id')
+                                ->select('student_answers.*', 'questions.variation_id')
+                                ->where('worksheet_id', $worksheet->id)
+                                ->orderBy('questions.id')
+                                ->get();
             $questions = Question::where('collection_id', $collection->id)->get();
             $view = 'pages.tryout.models.one';
         } else if ($variation_id == 2) {
@@ -226,7 +238,6 @@ class TryoutController extends Controller
             // dd($questions);
             $view = 'pages.tryout.models.three';
         }
-
         // $questions = Question::where('collection_id', $collection->id)->get();
         $options = ['', 'A', 'B', 'C', 'D', 'E'];
         return view($view, [
@@ -234,11 +245,26 @@ class TryoutController extends Controller
             'collection' => $collection,
             'questions' => $questions,
             'options' => $options,
+            'answers' => $answers,
         ]);
     }
 
     public function worksheet(Worksheet $worksheet, Request $request)
     {
+        $answers = StudentAnswer::join('questions', 'questions.id', '=', 'student_answers.question_id')
+                                ->select('student_answers.*', 'questions.variation_id')
+                                ->where('worksheet_id', $worksheet->id)
+                                ->orderBy('questions.variation_id')
+                                ->get();
+        foreach ($answers as $answer) {
+            dump($answer->question->option_id);
+            foreach ($answer->question->options as $option) {
+                dump($option->id);
+                dump($option->value);
+            }
+            die;
+        }
+
         $results = ResultWorksheet::where('worksheet_id', $worksheet->id)->get();
         return view('pages.tryout.result', [
             'worksheet' => $worksheet,
@@ -309,7 +335,7 @@ class TryoutController extends Controller
 
         $request->session()->forget(['start_date', 'end_date', 'time', 'worksheet_id']);
 
-        return \redirect('tryout/result?tryout_id=' . $tryout_id);
+        return \redirect('history/tryout/result?tryout_id=' . $tryout_id);
     }
 
     public function result(Request $request)
@@ -363,7 +389,7 @@ class TryoutController extends Controller
             $tryouts = Tryout::select('tryouts.*', 'worksheets.id as worksheet_id', 'worksheets.user_id', 'worksheets.tryout_id')
                             ->join('worksheets', 'worksheets.tryout_id', '=', 'tryouts.id')
                             ->where('user_id', '=', $user_id)
-                            ->orderBy('worksheets.id')
+                            ->orderBy('worksheets.id', 'desc')
                             ->paginate(3);
             $table_name = 'Daftar Try Out Yang Telah Diikuti';
         } else  {

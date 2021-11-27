@@ -62,7 +62,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
+                                <th scope="col">Peringkat</th>
                                 <th scope="col">Nama Siswa</th>
                                 <th scope="col">Nilai</th>
                                 <th scope="col">Aksi</th>

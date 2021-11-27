@@ -62,7 +62,7 @@
                         <p>Jenis Soal</p>
                     </a>
                 </li>
-                <li class="nav-item {{ Request::is("management/user") ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is("management/user*") ? 'active' : '' }}">
                     <a href="/management/user">
                         <i class="fas fa-user"></i>
                         <p>Pengguna</p>

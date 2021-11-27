@@ -50,8 +50,8 @@ Route::middleware([Authenticate::class])->group(function() {
     Route::post('/tryout/token', [TryoutController::class, 'token'])->middleware('role.student');
     Route::get('/tryout/working', [TryoutController::class, 'working'])->middleware('role.student');
     Route::get('/tryout', [TryoutController::class, 'index'])->middleware('role.student');
-    Route::get('/history/tryout/{tryout}', [TryoutController::class, 'show'])->middleware('role.student');
     Route::get('/history/tryout/result', [TryoutController::class, 'result'])->middleware('role.student');
+    Route::get('/history/tryout/{tryout}', [TryoutController::class, 'show'])->middleware('role.student');
     Route::get('/history/tryout/worksheet/{worksheet}', [TryoutController::class, 'worksheet'])->middleware('role.student');
     Route::get('/history/tryout', [TryoutController::class, 'history'])->middleware('role.student');
 });
