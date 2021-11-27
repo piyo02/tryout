@@ -1,7 +1,7 @@
 @extends('pages.tryout.working')
 
 @section('models')
-<div class="page-navs py-3 pr-2">
+<div class="page-inner">
     <div class="row">
         <div class="col-sm-8">
             <div class="card card-stats card-round">
@@ -24,7 +24,7 @@
                         @csrf
                         <input type="hidden" id="start_date" name="start_date" value="{{ session()->get('start_date') }}">
                         <input type="hidden" id="end_date" name="end_date" value="{{ session()->get('end_date') }}">
-                        <input type="hidden" id="tryout_time" name="tryout_time" value="{{ session()->get('time') }}">
+                        <input type="hidden" id="time" name="time" value="{{ session()->get('time') }}">
                         <input type="hidden" id="tryout_id" name="tryout_id" value="{{ $tryout->id }}">
                         <input type="hidden" id="variation_id" name="variation_id" value="{{ $tryout->collection->variation_id }}">
                         <input type="hidden" id="worksheet_id" name="worksheet_id" value="{{ session()->get('worksheet_id') }}">
@@ -35,58 +35,42 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="page-inner page-inner-fill">
-    <div id="questKanban" class="board">
-        <?php $index = 1; ?>
-        @foreach ($questions as $question)
-            <span class="d-none parent" id="{{$question->id}}">
-                <?php $parent_index = 0; ?>
-                @foreach($question->childs as $parent)
-                <div class="kanban-board child-{{$question->id}}" style="width: 450px">
-                    <div class="card">
-                        <div class="card-header text-center bg-danger text-white">
-                            <h6 id="colum"><b>KOLOM {{$index}}</b></h6>
-                        </div>
-                        <div class="text-center card-body">
-                            {!! file_get_contents(storage_path('app/'.$parent->value)) !!}
-                        </div>
-                    </div>
-                    <?php $child_index = 0; ?>
-                    @foreach($parent->childs as $child)
-                    <div class="row mb-3">
-                        <div class="col">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        {{$loop->iteration}}
-                                    </span>
-                                    <input type="text" class="form-control" value="{!! file_get_contents(storage_path('app/'.$child->value)) !!}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="selectgroup" id="options">
-                                <?php $option_index = 0; ?>
-                                @foreach($child->options as $option)
-                                <div class="selectgroup-item">
-                                    <input type="radio" class="selectgroup-input">
-                                    <span onclick="answer( {{$option->id}}, {{$child->id}}, {{$option->skor}} )" class="selectgroup-button selectgroup-button-icon">{{$option->value}}</span>
-                                </div>
-                                <?php $option_index++; ?>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    <?php $child_index++; ?>
+    <?php $index = 1; ?>
+    @foreach($questions as $question)
+    <div class="row d-none justify-content-between parent" id="{{$question->id}}">
+        <?php $parent_index = 0; ?>
+        @foreach($question->childs as $parent)
+        <div class="col child-{{$question->id}}">
+            <div class="card">
+                <div class="card-header text-center bg-danger text-white">
+                    <h6 id="colum"><b>KOLOM {{$index}}</b></h6>
+                </div>
+                <div class="text-center card-body">
+                    {!! file_get_contents(storage_path('app/'.$parent->value)) !!}
+                </div>
+            </div>
+            <?php $child_index = 0; ?>
+            @foreach($parent->childs as $child)
+            <div class="row">
+                <div class="card p-1 mr-2">
+                    {!! file_get_contents(storage_path('app/'.$child->value)) !!}
+                </div>
+                <div id="options">
+                    <?php $option_index = 0; ?>
+                    @foreach($child->options as $option)
+                    <button onclick="answer( {{$option->id}}, {{$child->id}}, {{$option->skor}} )" class="btn btn-round btn-xs btn-default btn-border">{{$option->value}}</button>
+                    <?php $option_index++; ?>
                     @endforeach
                 </div>
-                <?php $parent_index++; ?>
-                @endforeach
-            </span>
-        <?php $index++; ?>
+            </div>
+            <?php $child_index++; ?>
+            @endforeach
+        </div>
+        <?php $parent_index++; ?>
         @endforeach
     </div>
+    <?php $index++; ?>
+    @endforeach
 </div>
 @endsection
