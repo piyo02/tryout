@@ -339,6 +339,13 @@ class TryoutController extends Controller
 
     public function result(Request $request)
     {
+        $role_id = auth()->user()->role_id;
+        if( $role_id == 4 ){
+            $back = '/history/tryout';
+        } else {
+            $back = '/history/tryout/' . $worksheet->tryout_id;
+        }
+
         $tryout_id = $request->tryout_id;
         $user_id = auth()->user()->id;
         $worksheet = Worksheet::where([
@@ -348,6 +355,7 @@ class TryoutController extends Controller
         $results = ResultWorksheet::where('worksheet_id', $worksheet->id)->get();
         return view('pages.tryout.result', [
             'worksheet' => $worksheet,
+            'back' => $back,
             'results' => $results,
         ]);
     }
