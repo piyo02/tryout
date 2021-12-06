@@ -90,6 +90,57 @@ class QuestionController extends Controller
         return redirect($path)->with($status, $message);
     }
 
+    public function store_group(Request $request)
+    {
+        $total = ($request->col_variation_id == 2) ? 10 : 50;
+        $validatedData = $request->validate([
+            'question' => 'required',
+            'variation_id' => 'required',
+            'collection_id' => 'required',
+        ]);
+
+        $statement = \explode(" ", $request->question);
+        if( count($statement) != 5 ){
+            return redirect('/management/collection/' . $request->collection_id)->with('danger', 'Soal yang anda masukkan tidak sesuai format');
+        }
+
+        $options = ['A', 'B', 'C', 'D', 'E'];
+        $parent = Question::create([
+            'value' => $request->question,
+            'collection_id' => $request->collection_id,
+            'created_by' => auth()->user()->id,
+            'status' => 1,
+            'variation_id' => $request->variation_id,
+        ]);
+        for ($i=0; $i < $total; $i++) { 
+            
+            $question = $statement;
+            shuffle($question);
+            
+            $answer = array_pop($question);
+            $idx_answer = array_search($answer, $statement);
+            $str_question = implode(" ", $question);
+            
+            $quest = Question::create([
+                'value' => $str_question,
+                'parent_id' => $parent->id,
+                'collection_id' => $request->collection_id,
+                'created_by' => auth()->user()->id,
+                'status' => 1,
+                'variation_id' => $request->variation_id,
+            ]);
+
+            for ($j=0; $j < 5; $j++) { 
+                Option::create([
+                    'value' => $options[$j],
+                    'skor' => ($j == $idx_answer) ? 1 : 0,
+                    'question_id' => $quest->id,
+                ]);
+            }
+        }
+        return redirect('/management/collection/' . $request->collection_id)->with('success', 'Berhasil Membuat Soal');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -98,6 +149,7 @@ class QuestionController extends Controller
      */
     public function show(Request $request, Question $question)
     {
+        $variations = Variation::where('about', 'question')->get();
         $questions = Question::where('parent_id', $question->id)->latest()->paginate(10);
         $back = ($request->parent_id) ? "/management/question/$request->parent_id?col_id=$request->col_id" : "/management/collection/$request->col_id";
         return view('pages.management.collection.detail', [
@@ -108,6 +160,9 @@ class QuestionController extends Controller
             'header' => "Manajemen Soal",
             'questions' => $questions,
             'collection_id' => $request->col_id,
+            'variation_id' => $questions[0]->variation_id,
+            'variations' => $variations,
+            'button_add' => false,
         ]);
     }
 

@@ -161,7 +161,7 @@
 					var curr_btn_parent = document.getElementsByClassName('btn-parent');
 					if (curr_btn_parent[0]) {
 						curr_btn_parent[0].classList.add('btn-border');
-						// curr_btn_parent[0].classList.remove('btn-parent');
+						curr_btn_parent[0].classList.remove('btn-parent');
 					}
 
 					btn_parent.classList.add('btn-parent');
@@ -230,10 +230,10 @@
 			var data = [];
 			data['worksheet_id'] = worksheet_id.value;
 			data['question_id'] = quest_id;
-			data['option_id'] = opt_id;
+			data['option_id'] = opt_id;																																																																																																																																									
 			data['skor'] = skor;
 
-			fetch('/tryout/answer', {
+			fetch('/tryout/answer', {																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																			
 					headers: {
 						"Content-Type": "application/json",
 						"Accept": "application/json, text-plain, */*",
@@ -251,34 +251,10 @@
 				})
 				.then(response => response.json())
 				.then(function(data) {
-					console.log(data)
-					// $.notify({
-					// 	message: 'Jawaban anda berhasil Tersimpan',
-					// 	icon: 'fa fa-bell',
-					// 	title: 'Notifikasi',
-					// }, {
-					// 	type: 'info',
-					// 	placement: {
-					// 		from: 'bottom',
-					// 		align: 'right'
-					// 	},
-					// 	time: 500,
-					// });
+					console.log(data);																																																																																																																																																																																																																																																																																																																																																																																																																																																															
 				})
 				.catch(function(error) {
 					console.log(error);
-					// $.notify({
-					// 	message: 'Jawaban anda gagal Tersimpan',
-					// 	icon: 'fa fa-bell',
-					// 	title: 'Notifikasi',
-					// }, {
-					// 	type: 'danger',
-					// 	placement: {
-					// 		from: 'bottom',
-					// 		align: 'left'
-					// 	},
-					// 	time: 500,
-					// });
 				});
 			if (next) {
 				if (next == quest_id) {
@@ -298,7 +274,8 @@
 				if( isNaN(parseInt(tryout_time.value)) ){
 					fn_form_submit();
 				}
-				var end = new Date(stop + (parseInt(tryout_time.value) * 60000 * index_timer))
+				// var end = new Date(stop + (parseInt(tryout_time.value) * 60000 * index_timer))
+				var end = new Date(stop + (parseInt(tryout_time.value) * 1000 * index_timer))
 				var now = new Date().getTime();
 
 				var distance = end - now;

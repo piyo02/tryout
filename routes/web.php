@@ -36,6 +36,7 @@ Route::middleware([Authenticate::class])->group(function() {
     Route::get('/dashboard',  [DashboardController::class, 'index']);
     Route::resource('/profile', UserProfileController::class);
 
+    Route::post('/management/question_group', [QuestionController::class, 'store_group']);
     Route::get('/management/collection/token', [CollectionController::class, 'token'])->middleware('role.admin');
     Route::resource('/management/collection', CollectionController::class)->middleware('role.admin');
     Route::resource('/management/question', QuestionController::class)->middleware('role.admin');

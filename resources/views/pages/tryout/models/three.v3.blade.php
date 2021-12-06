@@ -41,51 +41,53 @@
         </div>
     </div>
 
+    <?php $index = 1; ?>
     @foreach($questions as $question)
     <div class="row row-demo-grid d-none justify-content-between parent" id="{{$question->id}}">
-        @for ($i = 0; $i < 5; $i++)
+        <?php $parent_index = 0; ?>
+        @foreach($question->childs as $parent)
         <div class="col child-{{$question->id}}">
             <div class="card">
                 <div class="card-header text-center bg-primary text-white">
-                    <h6 id="colum" style="font-size: 20px;"><b>KOLOM {{$loop->iteration}}</b></h6>
+                    <h6 id="colum" style="font-size: 20px;"><b>KOLOM {{$index}}</b></h6>
                 </div>
                 <div class="text-center card-body" style="font-size: 20px; letter-spacing: 5px;">
-                    {{ $question->value }}
-                    <p>A B C D E</p>
+                    {!! file_get_contents(storage_path('app/'.$parent->value)) !!}
                 </div>
             </div>
-            <?php $index = 0 + ($i * 10) ?>
-            <?php $number = 1;?>
-            @for ($j = $index; $j < $index+10; $j++)
+            <?php $child_index = 0; ?>
+            @foreach($parent->childs as $child)
             <div class="row mb-3">
                 <div class="col input-group" style="width: 60px !important; padding-right: 0px !important">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                            {{$number}}.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                        </div                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               >
+                            {{$loop->iteration}}.
+                        </div>
                         <div class="form-control">
-                            {{ $question->childs[$j]->value }}
+                            {!! file_get_contents(storage_path('app/'.$child->value)) !!}
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="selectgroup" id="options">
                         <?php $option_index = 0; ?>
-                        @foreach($question->childs[$j]->options as $option)
+                        @foreach($child->options as $option)
                         <div class="selectgroup-item">
                             <input type="radio" class="selectgroup-input">
-                            <span id="{{$option->id}}" onclick="answer( {{$option->id}}, {{$question->childs[$j]->id}}, {{$option->skor}} )" class="selectgroup-button quest_{{$question->childs[$j]->id}}" style="width: 5px !important;">{{$option->value}}</span>
+                            <span id="{{$option->id}}" onclick="answer( {{$option->id}}, {{$child->id}}, {{$option->skor}} )" class="selectgroup-button quest_{{$child->id}}" style="width: 5px !important;">{{$option->value}}</span>
                         </div>
                         <?php $option_index++; ?>
                         @endforeach
                     </div>
                 </div>
             </div>
-            <?php $number++; ?>
-            @endfor
+            <?php $child_index++; ?>
+            @endforeach
         </div>
-        @endfor
+        <?php $parent_index++; ?>
+        @endforeach
     </div>
+    <?php $index++; ?>
     @endforeach
 </div>
 @endsection

@@ -56,6 +56,7 @@ class CollectionController extends Controller
      */
     public function show(Collection $collection)
     {
+        $variations = Variation::where('about', 'question')->get();
         $questions = Question::where([
             ['collection_id', '=', $collection->id],
             ['parent_id', '=', NULL],
@@ -65,9 +66,11 @@ class CollectionController extends Controller
                 'back' => "/management/collection",
                 'create' => "/management/question/create?col_id=$collection->id",
             ],
+            'variation_id' => $collection->variation_id,
             'collection_id' => $collection->id,
             'header' => "Manajemen Soal $collection->name",
             'questions' => $questions,
+            'variations' => $variations,
         ]);
     }
 

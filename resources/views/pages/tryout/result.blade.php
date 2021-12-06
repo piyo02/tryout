@@ -39,11 +39,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix">
-                    <ul class="pagination pg-primary">
-                        {{ $worksheets->links() }}
-                    </ul>
-                </div>
             </div>
         </div>
         <div class="col-sm-7">

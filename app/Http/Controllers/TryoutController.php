@@ -135,26 +135,28 @@ class TryoutController extends Controller
                     $parent = [];
                     $questions = Question::select('id', 'parent_id')->where('collection_id', $tryout->collection_id)->get();
                     foreach ($questions as $question) {
-                        if ($tryout->collection->variation_id == 2 && $question->parent_id != NULL) {
+                        if ($tryout->collection->variation_id != 1 && $question->parent_id != NULL) {
                             StudentAnswer::create([
                                 'worksheet_id' => $worksheet->id,
                                 'question_id' => $question->id,
                                 'skor' => 0,
                             ]);
-                        } else if ($tryout->collection->variation_id == 3) {
-                            if ($question->parent_id == NULL) {
-                                array_push($parent, $question->id);
-                            } else if (in_array($question->parent_id, $parent)) {
-                                // array_push($parent, $question->id);
-                                // nothing
-                            } else {
-                                StudentAnswer::create([
-                                    'worksheet_id' => $worksheet->id,
-                                    'question_id' => $question->id,
-                                    'skor' => 0,
-                                ]);
-                            }
-                        } else if ($tryout->collection->variation_id == 1) {
+                        }
+                        // } else if ($tryout->collection->variation_id == 3) {
+                        //     if ($question->parent_id == NULL) {
+                        //         array_push($parent, $question->id);
+                        //     } else if (in_array($question->parent_id, $parent)) {
+                        //         // array_push($parent, $question->id);
+                        //         // nothing
+                        //     } else {
+                        //         StudentAnswer::create([
+                        //             'worksheet_id' => $worksheet->id,
+                        //             'question_id' => $question->id,
+                        //             'skor' => 0,
+                        //         ]);
+                        //     }
+                        // } else if ($tryout->collection->variation_id == 1) {
+                        else if ($tryout->collection->variation_id == 1) {
                             StudentAnswer::create([
                                 'worksheet_id' => $worksheet->id,
                                 'question_id' => $question->id,
@@ -224,18 +226,17 @@ class TryoutController extends Controller
                     ['parent_id', '=', $column->id],
                 ])->get();
 
-                for ($j = 0; $j < count($parents); $j++) {
-                    $parent = $parents[$j];
-                    $childs = Question::where([
-                        ['collection_id', '=', $collection->id],
-                        ['parent_id', '=', $parent->id],
-                    ])->get();
-                    $parents[$j]->childs = $childs;
-                }
+                // for ($j = 0; $j < count($parents); $j++) {
+                //     $parent = $parents[$j];
+                //     $childs = Question::where([
+                //         ['collection_id', '=', $collection->id],
+                //         ['parent_id', '=', $parent->id],
+                //     ])->get();
+                //     $parents[$j]->childs = $childs;
+                // }
                 $questions[$i]->childs = $parents;
                 $i++;
             }
-            // dd($questions);
             $view = 'pages.tryout.models.three';
         }
         // $questions = Question::where('collection_id', $collection->id)->get();
@@ -313,7 +314,10 @@ class TryoutController extends Controller
             $total_skor = $total_skor + $skor;
         }
         if ($data) {
-            ResultWorksheet::insert($data);
+            $has_result = ResultWorksheet::where('worksheet_id', $worksheet_id)->get();
+            if( !count($has_result) ){
+                ResultWorksheet::insert($data);
+            }
             Worksheet::where('id', $worksheet_id)->update([
                 'status' => 1,
                 'total_skor' => $total_skor,
@@ -346,6 +350,9 @@ class TryoutController extends Controller
             ['user_id', '=', $user_id],
             ['tryout_id', '=', $tryout_id],
         ])->first();
+        $worksheets = Worksheet::where([
+            ['tryout_id', '=', $tryout_id],
+        ])->take(10)->get();
         $results = ResultWorksheet::where('worksheet_id', $worksheet->id)->get();
 
         if( $role_id == 4 ){
@@ -355,9 +362,11 @@ class TryoutController extends Controller
         }
 
         return view('pages.tryout.result', [
+            'worksheets' => $worksheets,
             'worksheet' => $worksheet,
             'back' => $back,
             'results' => $results,
+            'role_id' => $role_id,
         ]);
     }
 

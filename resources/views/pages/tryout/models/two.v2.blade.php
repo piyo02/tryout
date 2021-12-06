@@ -51,8 +51,7 @@
                     <h6 id="colum"><b>KOLOM {{ $loop->iteration }}</b></h6>
                 </div>
                 <div class="text-center card-body">
-                    {{ $question->value }}
-                    <p>A B C D E</p>
+                    {!! file_get_contents(storage_path('app/'.$question->value)) !!}
                 </div>
             </div>
         </div>
@@ -65,7 +64,7 @@
                         <div class="card-body text-center">
                             <div class="row justify-content-center">
                                 <div class="col-12">
-                                    {{ $child->value }}
+                                    {!! file_get_contents(storage_path('app/'.$child->value)) !!}
                                 </div>
                                 <div class="col-12">
                                     <div class="selectgroup" id="options">

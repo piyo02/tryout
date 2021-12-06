@@ -144,7 +144,7 @@
                                                                         <label>Model Soal</label>
                                                                         <select class="form-control" id="variation_id" name="variation_id">
                                                                             @foreach ($tryout_models as $tryout_model)
-                                                                            <option {{ ($collection->tryout_model == $tryout_model->id) ? 'selected' : '' }} value="{{$tryout_model->id}}">{{$tryout_model->value}}</option>
+                                                                            <option {{ ($collection->variation_id == $tryout_model->id) ? 'selected' : '' }} value="{{$tryout_model->id}}">{{$tryout_model->value}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -159,7 +159,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#delete-collection-{{$collection->id}}">
+                                        {{-- <button class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#delete-collection-{{$collection->id}}">
                                             <i class="fa fa-trash"></i>
                                             Hapus
                                         </button>
@@ -193,7 +193,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
     
                                     </td>
                                 </tr>

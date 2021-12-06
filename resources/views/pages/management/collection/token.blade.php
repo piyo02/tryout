@@ -64,7 +64,7 @@
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group form-group-default">
-                                                        <label>Durasi Ujian (menit)</label>
+                                                        <label>Durasi Ujian (Detik)</label>
                                                         <input id="time" name="time" type="number" class="form-control" placeholder="Waktu" required>
                                                     </div>
                                                 </div>
@@ -87,7 +87,7 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Token</th>
                                 <th scope="col">Tanggal Ujian</th>
-                                <th scope="col">Durasi Ujian (menit)</th>
+                                <th scope="col">Durasi Ujian (detik)</th>
                                 <th scope="col">Status</th>
                                 {{-- <th scope="col">Aksi</th> --}}
                             </tr>
