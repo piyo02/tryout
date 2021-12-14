@@ -117,14 +117,14 @@
                                         <td width="50%">{!! Storage::disk('local')->get($question->value) !!}</td>
                                     @endif
                                     <td>{{$question->variation->value}}</td>
-                                    @if ((!$question->parent_id || $question->collection->variation_id == 3) && $question->collection->variation_id != 1)
+                                    {{-- @if ((!$question->parent_id || $question->collection->variation_id == 3) && $question->collection->variation_id != 1)
                                     <td>
                                         <a class="btn btn-default btn-sm ml-auto text-white" href="/management/question/{{$question->id}}?col_id={{$collection_id}}&parent_id={{$question->parent_id}}">
                                             <i class="fa-plus"></i>
                                             Daftar Soal
                                         </a>
-                                    @endif
                                     </td>
+                                    @endif --}}
                                     @if ($variation_id == 1)
                                     <td>
                                         <a class="btn btn-primary btn-sm ml-auto text-white" href="/management/question/{{$question->id}}/edit?col_id={{$collection_id}}&parent_id={{$question->parent_id}}">
