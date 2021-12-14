@@ -275,6 +275,10 @@
 					fn_form_submit();
 				}
 				// var end = new Date(stop + (parseInt(tryout_time.value) * 60000 * index_timer))
+				console.log(end_date.value)
+				console.log(stop)
+				console.log(tryout_time.value)
+
 				var end = new Date(stop + (parseInt(tryout_time.value) * 1000 * index_timer))
 				var now = new Date().getTime();
 

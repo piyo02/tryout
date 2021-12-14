@@ -120,7 +120,7 @@ class TryoutController extends Controller
                     $data['user_id'] = $user_id;
                     $data['tryout_id'] = $tryout->id;
                     $data['start_date'] = $start_date;
-                    $data['end_date'] = date('Y-m-d H:i:s', strtotime('+' . $tryout->time . ' minutes', strtotime($start_date)));
+                    $data['end_date'] = date('Y-m-d H:i:s', strtotime('+' . $tryout->time . ' seconds', strtotime($start_date)));
                     $data['status'] = 0;
                     $data['total_skor'] = 0;
                     $data['final_value'] = 0;
