@@ -15,10 +15,10 @@ class CreateResultWorksheetsTable extends Migration
     {
         Schema::create('result_worksheets', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('skor');
+            $table->integer('skor');
             $table->string('question_type');
-            $table->tinyInteger('correct');
-            $table->tinyInteger('wrong');
+            $table->integer('correct');
+            $table->integer('wrong');
 
             $table->bigInteger('worksheet_id')->unsigned();
             $table->foreign('worksheet_id')->references('id')->on('worksheets');

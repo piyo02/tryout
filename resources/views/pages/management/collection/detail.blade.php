@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-<div class="panel-header bg-primary-gradient">
+<div class="panel-header bg-warning-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
@@ -114,7 +114,11 @@
                                     @if ($variation_id != 1)
                                         <td width="50%">{{ $question->value }}</td>
                                     @else
-                                        <td width="50%">{!! Storage::disk('local')->get($question->value) !!}</td>
+                                        @if (File::exists(storage_path("app/".$question->value)))
+                                            <td width="50%">{!! Storage::disk('local')->get($question->value) !!}</td>
+                                        @else
+                                            <td>{{ "Soal Tidak Ada" }}</td>
+                                        @endif
                                     @endif
                                     <td>{{$question->variation->value}}</td>
                                     {{-- @if ((!$question->parent_id || $question->collection->variation_id == 3) && $question->collection->variation_id != 1)
@@ -131,14 +135,11 @@
                                             <i class="fa fa-pencil-alt"></i>
                                             Edit
                                         </a>
-                                    </td>
-                                    @endif
-                
-                                        {{-- <button class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#delete-question-{{$question->id}}">
+                                        <button class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#delete-question-{{$question->id}}">
                                             <i class="fa fa-trash"></i>
                                             Hapus
                                         </button>
-
+    
                                         <div class="modal fade" id="delete-question-{{$question->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -168,7 +169,10 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
+                                    </td>
+                                    @endif
+                
     
                                 </tr>
                             @endforeach

@@ -6,6 +6,7 @@ use App\Models\Option;
 use App\Models\Question;
 use App\Models\Variation;
 use App\Models\Collection;
+use App\Models\StudentAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -92,7 +93,8 @@ class QuestionController extends Controller
 
     public function store_group(Request $request)
     {
-        $total = ($request->col_variation_id == 2) ? 10 : 50;
+        // $total = ($request->col_variation_id == 2) ? 10 : 50;
+        $total = 50;
         $validatedData = $request->validate([
             'question' => 'required',
             'variation_id' => 'required',
@@ -177,7 +179,7 @@ class QuestionController extends Controller
         try {
             $question_content = Storage::disk('local')->get($question->value);
         } catch (\Exception $exception) {
-            $question_content = Storage::disk('local')->get('public/uploads/question/question.html');
+            $question_content = Storage::disk('local')->get('public/uploads/questions/question.html');
         }
 
         $cancel = "/management/collection/$request->col_id";
@@ -272,8 +274,17 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        Question::destroy($question->id);
+        $questionHasStudentAnswer = StudentAnswer::where('question_id', $question->id)->get();
         $path = ( $question->parent_id ) ? "/management/question/$question->parent_id?col_id=$question->collection_id" : '/management/collection/' . $question->collection_id;
-        return redirect($path)->with('success', 'Berhasil Menghapus Data');
+        
+        if( count($questionHasStudentAnswer) ){
+            return redirect($path)->with('danger', 'Gagal Menghapus Bank Soal karena telah dikerjakan!');
+        } else {
+            Option::where('question_id', $question->id)->delete();
+            Question::destroy($question->id);
+            
+            return redirect($path)->with('success', 'Berhasil Menghapus Data');
+        }
+
     }
 }

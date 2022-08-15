@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-<div class="panel-header bg-primary-gradient">
+<div class="panel-header bg-warning-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
@@ -159,7 +159,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <button class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#delete-collection-{{$collection->id}}">
+                                        <button class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#delete-collection-{{$collection->id}}">
                                             <i class="fa fa-trash"></i>
                                             Hapus
                                         </button>
@@ -193,7 +193,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
     
                                     </td>
                                 </tr>

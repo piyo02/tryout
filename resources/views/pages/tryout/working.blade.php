@@ -51,7 +51,7 @@
 
 			@include('partials.sidebar')
 
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="orange2">
 
 				<div class="container-fluid">
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
@@ -115,7 +115,7 @@
 		var tryout_id = document.getElementById('tryout_id');
 		var tryout_time = document.getElementById('tryout_time');
 		var end_date = document.getElementById('end_date');
-
+		var start_date = document.getElementById('start_date');
 		let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 		// variation 1
@@ -124,9 +124,9 @@
 		// variation 2 dan 3
 		var parent_index = 0;
 		var parent_quest = document.getElementsByClassName('parent');
-
-		// variation 3
 		var column = document.getElementById('column');
+		
+		// variation 3
 		if( variation_id.value == 3 ){
 			document.body.style.zoom = '70%';			
 		}
@@ -198,7 +198,7 @@
 
 
 		function answer(opt_id, quest_id, skor, next = false, last = false) {
-			var btn_option = document.getElementById(opt_id);
+			var btn_option = document.getElementById("opt_"+opt_id);
 			if( variation_id.value == 1 ){
 				if( btn_option ){
 					var prev_btn_options = document.getElementsByClassName('quest_'+quest_id);
@@ -258,7 +258,8 @@
 				});
 			if (next) {
 				if (next == quest_id) {
-					show_parent(parent_index);
+					// siap siap ubah code ini
+					// show_parent(parent_index);
 				} else {
 					change_question(next);
 				}
@@ -275,9 +276,9 @@
 					fn_form_submit();
 				}
 				// var end = new Date(stop + (parseInt(tryout_time.value) * 60000 * index_timer))
-				console.log(end_date.value)
-				console.log(stop)
-				console.log(tryout_time.value)
+				// console.log(end_date.value)
+				// console.log(stop)
+				// console.log(tryout_time.value)
 
 				var end = new Date(stop + (parseInt(tryout_time.value) * 1000 * index_timer))
 				var now = new Date().getTime();
@@ -287,6 +288,10 @@
 				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				if(isNaN(hours) || isNaN(minutes) || isNaN(seconds)){
+					fn_form_submit();
+				}
 
 				time.innerHTML = hours + ":" + minutes + ":" + seconds;
 
@@ -311,8 +316,69 @@
 			form_finish.submit();
 			// console.log('fn_form_submit');
 		}
-		timer();
+
+		function stopwatch(){
+			var index_timer = 0;
+			var stop = new Date(end_date.value).getTime();
+			var start = new Date(start_date.value).getTime();
+			// console.log(start)
+			// startTime = new Date().getTime();
+
+			var x = setInterval(() => {
+				if( isNaN(parseInt(tryout_time.value)) ){
+					fn_form_submit();
+				}
+
+				var end = new Date(stop + (parseInt(tryout_time.value) * 1000 * index_timer))
+				var now = new Date().getTime();
+				
+				var startTime = new Date(start + (parseInt(tryout_time.value) * 1000 * index_timer))
+				// console.log(startTime_);
+				
+				var distance_timer = end - now;
+				var distance = now - startTime;
+
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				time.innerHTML = hours + ":" + minutes + ":" + seconds;
+
+				// if(tryout_time.value == parseInt(distance/1000)){
+				// 	console.log('end')
+				// 	if(parent_index == column.value){
+				// 		console.log('end!')
+				// 		clearInterval(x);
+				// 		fn_form_submit();
+				// 	} else {
+				// 		index_timer++;
+				// 		show_parent(parent_index);
+				// 	}
+				// }
+				// console.log(distance_timer);
+				if(distance_timer < 0){
+					// console.log(index_timer);
+					// index_timer++;
+					// show_parent(parent_index);
+					if (parent_index == column.value) {
+						clearInterval(x);
+						fn_form_submit();
+					} else {
+						index_timer++;
+						show_parent(parent_index);
+					}
+				}
+			}, 1000);
+		}
+
+		if(variation_id.value == 2){
+			stopwatch();
+		} else {
+			timer();
+		}
+
 		show_parent(parent_index);
+
 	</script>
 </body>
 

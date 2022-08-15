@@ -49,4 +49,13 @@ class Question extends Model
     {
         return $this->belongsTo(Question::class, 'parent_id', 'id');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($question){
+            $question->options()->delete();
+        });
+    }
 }

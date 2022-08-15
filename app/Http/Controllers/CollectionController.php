@@ -106,8 +106,20 @@ class CollectionController extends Controller
      */
     public function destroy(Collection $collection)
     {
-        Collection::destroy($collection->id);
-        return redirect('/management/collection')->with('success', 'Berhasil Menghapus Data');
+        $tokenHasUsed = Tryout::where([
+            ['collection_id', '=', $collection->id],
+            ['status', '!=', 0]
+        ])->get();
+        
+        if( count($tokenHasUsed) ){
+            return redirect('/management/collection')->with('danger', 'Gagal Menghapus Bank Soal karena telah dikerjakan!');
+        } else {
+            Tryout::where('collection_id', $collection->id)->delete();
+
+            Collection::destroy($collection->id);
+            return redirect('/management/collection')->with('success', 'Berhasil Menghapus Data');
+        }
+
     }
 
     public function token(Request $request)

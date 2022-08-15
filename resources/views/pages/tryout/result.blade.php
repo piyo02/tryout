@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-<div class="panel-header bg-primary-gradient">
+<div class="panel-header bg-warning-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
-                        <thead class="bg-primary text-white">
+                        <thead class="bg-warning text-white">
                             <tr>
                                 <th>ASPEK PENILAIAN</th>
                                 <th class="text-center">BENAR</th>

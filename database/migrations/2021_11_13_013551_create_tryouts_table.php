@@ -17,7 +17,7 @@ class CreateTryoutsTable extends Migration
             $table->id();
             $table->string('token');
             $table->date('date');
-            $table->tinyInteger('time');
+            $table->integer('time');
             $table->tinyInteger('status');
             $table->timestamps();
         });

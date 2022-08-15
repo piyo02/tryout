@@ -12,8 +12,9 @@ class QuestionObserver
     public function created(Question $question)
     {
         $request = Request::all();
+        $total = (array_key_exists('quest_two_opt', $request)) ? ($request['quest_two_opt'] == true) ? 2 : 5 : 5;
         if(isset($request['answer'])){
-            for ($i=0; $i < 5; $i++) { 
+            for ($i=0; $i < $total; $i++) { 
                 $option = 'option_' . $i;
                 $skor = ($request['answer'] == $option) ? 1 : 0; 
                 

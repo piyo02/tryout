@@ -4,7 +4,7 @@
 <div class="page-inner">
     <div class="row">
         <div class="col-sm-8">
-            <div class="card bg-primary card-stats card-round">
+            <div class="card bg-warning card-stats card-round">
                 <div class="card-body text-center">
                     @foreach($questions as $question)
                     <button id="btn-{{$question->id}}" class="btn btn-white btn-border">{{$loop->iteration}}</button>
@@ -15,7 +15,7 @@
         <div class="col-sm-4">
             <div class="row">
                 <div class="col-6">
-                    <div class="card bg-primary text-white p-3">
+                    <div class="card bg-warning text-white p-3">
                         <div class="row justify-content-center">
                             <h1>
                                 <i style="width: 50px;" class="fas fa-clock"></i>
@@ -46,7 +46,7 @@
         @for ($i = 0; $i < 5; $i++)
         <div class="col child-{{$question->id}}">
             <div class="card">
-                <div class="card-header text-center bg-primary text-white">
+                <div class="card-header text-center bg-warning text-white">
                     <h6 id="colum" style="font-size: 20px;"><b>KOLOM {{$loop->iteration}}</b></h6>
                 </div>
                 <div class="text-center card-body" style="font-size: 20px; letter-spacing: 5px;">
@@ -74,7 +74,7 @@
                         @foreach($question->childs[$j]->options as $option)
                         <div class="selectgroup-item">
                             <input type="radio" class="selectgroup-input">
-                            <span id="{{$option->id}}" onclick="answer( {{$option->id}}, {{$question->childs[$j]->id}}, {{$option->skor}} )" class="selectgroup-button quest_{{$question->childs[$j]->id}}" style="width: 5px !important;">{{$option->value}}</span>
+                            <span id="opt_{{$option->id}}" onclick="answer( {{$option->id}}, {{$question->childs[$j]->id}}, {{$option->skor}} )" class="selectgroup-button quest_{{$question->childs[$j]->id}}" style="width: 5px !important;">{{$option->value}}</span>
                         </div>
                         <?php $option_index++; ?>
                         @endforeach

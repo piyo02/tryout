@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-<div class="panel-header bg-primary-gradient">
+<div class="panel-header bg-warning-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
@@ -53,7 +53,19 @@
                                 <div class="form-group form-group-default">
                                     <label>Status</label>
                                     @if (!$edit)
-                                    <input disabled type="text" class="form-control" value="Aktif" required>
+                                    <div class="row">
+                                        <div class="col-md-6 pr-0">
+                                            <input disabled type="text" class="form-control" value="Aktif" required>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
+                                            <div class="form-check">
+												<label class="form-check-label">
+													<input class="form-check-input" id="quest_two_opt" name="quest_two_opt" type="checkbox" value="">
+													<span class="form-check-sign">Soal Benar/Salah</span>
+												</label>
+											</div>
+                                        </div>
+                                    </div>
                                     @else
                                     <select class="form-control" id="status" name="status">
                                         <option {{ (isset($question) && ($question->status == 1)) ? 'selected' : '' }} value="1">Aktif</option>

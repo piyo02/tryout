@@ -25,8 +25,8 @@ class CreateWorksheetsTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->boolean('status');
-            $table->tinyInteger('total_skor');
-            $table->tinyInteger('final_value');
+            $table->integer('total_skor');
+            $table->integer('final_value');
             $table->timestamps();
         });
     }

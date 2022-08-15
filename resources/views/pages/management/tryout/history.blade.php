@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-<div class="panel-header bg-primary-gradient">
+<div class="panel-header bg-warning-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
@@ -35,8 +35,12 @@
                                 <tr>
                                     <td>{{($tryouts->currentPage() - 1) * $tryouts->perPage() + $loop->iteration}}</td>
                                     <td>{{ $tryout->collection->name }}</td>
-                                    <td>{{ preg_replace("/(?!^).(?!$)/", "*", $tryout->token) }}</td>
-                                    <td>{{$tryout->date}}</td>
+                                    @if ( auth()->user()->role->id == 4)
+                                    <td>{{ preg_replace("/(?!^).(?!$)/", "*", $tryout->token) }}</td>                                        
+                                    @else
+                                    <td>{{ $tryout->token }}</td>                                        
+                                    @endif
+                                    <td>{{ $tryout->date }}</td>
                                     <td>
                                         <a href="/history/tryout/{{$tryout->id}}" class="btn btn-sm btn-default">
                                             <i class="icon-eye"></i>

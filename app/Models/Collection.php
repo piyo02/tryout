@@ -11,16 +11,25 @@ class Collection extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-
+    
     public function variation() {
         return $this->belongsTo(Variation::class);
     }
-
+    
     public function questions() {
         return $this->hasMany(Question::class);
     }
-
+    
     public function tryouts() {
         return $this->hasMany(Tryout::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($collection){
+            $collection->questions()->delete();
+        });
     }
 }

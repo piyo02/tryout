@@ -6,16 +6,16 @@
         <div class="col-sm-10">
             <div class="row">
                 <div class="col-sm-7">
-                    <div class="card bg-primary text-white card-stats card-round">
+                    <div class="card bg-warning text-white card-stats card-round">
                         <div class="card-body text-center">
-                            <h2><b>Tes Kecerdasan</b></h2>
+                            <h2><b>{{ $tryout->collection->name }}</b></h2>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="row">
                         <div class="col-6">
-                            <div class="card bg-primary text-white px-2 pt-3 pb-3">
+                            <div class="card bg-warning text-white px-2 pt-3 pb-3">
                                 <div class="row justify-content-center">
                                     <h2 >
                                         <i style="width: 30px;" class="fas fa-clock"></i>
@@ -32,8 +32,9 @@
                                 <input type="hidden" id="tryout_time" name="tryout_time" value="{{ session()->get('time') }}">
                                 <input type="hidden" id="tryout_id" name="tryout_id" value="{{ $tryout->id }}">
                                 <input type="hidden" id="variation_id" name="variation_id" value="{{ $tryout->collection->variation_id }}">
+                                <input type="hidden" id="column" name="column" value="{{ count($questions) }}">
                                 <input type="hidden" id="worksheet_id" name="worksheet_id" value="{{ session()->get('worksheet_id') }}">
-                                <button style="text-align: center; padding-bottom: 12px !important; padding-top: 18px !important;" id="btn_finish" type="submit" class="btn_finish btn btn-primary">
+                                <button style="text-align: center; padding-bottom: 12px !important; padding-top: 18px !important;" id="btn_finish" type="submit" class="btn_finish btn btn-warning">
                                     <h2 style="font-weight: bold;">SELESAI</h2>
                                 </button>
                             </form>
@@ -47,7 +48,7 @@
     <div class="row d-none parent justify-content-center" id="{{ $question->id }}">
         <div class="col-sm-8">
             <div class="card">
-                <div class="card-header text-center bg-primary text-white">
+                <div class="card-header text-center bg-warning text-white">
                     <h6 id="colum"><b>KOLOM {{ $loop->iteration }}</b></h6>
                 </div>
                 <div class="text-center card-body">
